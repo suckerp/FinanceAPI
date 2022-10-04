@@ -1,39 +1,45 @@
 import express = require('express')
 const rapidmsfinance = express.Router()
+import { getPerformanceID, getPrice, getDividend, getYield } from './msfinance_functions'
 
 
 rapidmsfinance.get('/ms_price', async (req,res)=>{
 
-    //const url = 'https://ms-finance.p.rapidapi.com/market/v2/auto-complete?q=apple';
+    //console.log(req.query.symbol)
 
-    //const url = 'https://ms-finance.p.rapidapi.com/stock/v2/get-dividends?performanceId=0P000000GY';
+    const performanceId = await getPerformanceID(req.query.symbol)
 
-    const url = 'https://ms-finance.p.rapidapi.com/stock/v2/get-realtime-data?performanceId=0P000000GY';
+    //const price = await getPrice(performanceId)
+
+    res.json(await getPrice(performanceId))
+
+})
+
+rapidmsfinance.get('/ms_dividend', async (req,res)=>{
+
+    //console.log(req.query.symbol)
+
+    const performanceId = await getPerformanceID(req.query.symbol)
+
+    //const dividend = await getDividend(performanceId)
+
+    res.json(await getDividend(performanceId))
     
-    const options = {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Key': 'f7b09cfecfmshfa2dc8dc247a515p1324b9jsnc915c2b6b3ec',
-        'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
-    }
-    };
+})
 
 
+rapidmsfinance.get('/ms_yield', async (req,res)=>{
 
-    async function getPrice() {
-        return fetch(url, options)
-        .then(res => res.json())
-        //.then(json => console.log(json))
-        .catch(err => console.error('error:' + err))
-    }
+    //console.log(req.query.symbol)
 
-    const result = await getPrice().then(res =>{return res})
+    const performanceId = await getPerformanceID(req.query.symbol)
 
-    console.log(result)
+    const actual_yield = await getYield(performanceId)
 
-    //res.json(result.data[result.data.length-1].Dividends)
-    res.json(result.lastPrice)
+    console.log(actual_yield)
 
+    res.json(actual_yield)
+    
 })
 
 
