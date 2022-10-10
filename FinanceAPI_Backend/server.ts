@@ -3,6 +3,8 @@ import { alphavantage } from './AlphaVantage/aplhavantage';
 import { rapidalpha } from './RapidAPI/AlphaVantage/aplhavantage';
 import { rapidmsfinance } from './RapidAPI/MSFinance/msfinance';
 import { rapidyahoofinance } from './RapidAPI/YahooFinance/yahoofinance';
+import { simfin } from './SimFin/simfin'
+import { polygon } from './Polygon/polygon'
 
 const app = express()
 
@@ -13,7 +15,9 @@ app.use(
     alphavantage,
     rapidalpha,
     rapidmsfinance,
-    rapidyahoofinance
+    rapidyahoofinance,
+    simfin,
+    polygon
 )
 
 

@@ -4,7 +4,7 @@ const options = {
         'X-RapidAPI-Key': 'f7b09cfecfmshfa2dc8dc247a515p1324b9jsnc915c2b6b3ec',
         'X-RapidAPI-Host': 'ms-finance.p.rapidapi.com'
         }
-    }
+    };
 
 export async function getPerformanceID(symbol:any) {
 
@@ -12,11 +12,11 @@ export async function getPerformanceID(symbol:any) {
 
     const performanceID = await fetch(url, options)
     .then(res => res.json())
-    .catch(err => console.error('error:' + err))
+    .catch(err => console.error('error:' + err));
 
-    const results:any[] = performanceID.results
+    const results:any[] = performanceID.results;
 
-    return results.find(stock => stock.ticker == symbol).performanceId
+    return results.find(stock => stock.ticker == symbol).performanceId;
 }
 
 export async function getPrice(performanceId:any) {
@@ -25,9 +25,9 @@ export async function getPrice(performanceId:any) {
 
     const price = await fetch(url, options)
         .then(res => res.json())
-        .catch(err => console.error('error:' + err))
+        .catch(err => console.error('error:' + err));
 
-    return price.lastPrice
+    return price.lastPrice;
 }
 
 export async function getDividend(performanceId:any) {
@@ -36,11 +36,15 @@ export async function getDividend(performanceId:any) {
 
     const dividend = await fetch(url, options)
         .then(res => res.json())
-        .catch(err => console.error('error:' + err))
+        .catch(err => console.error('error:' + err));
 
-    //console.log(result.rows[0].datum[result.rows[0].datum.length-2])
+    //console.log(result.rows[0].datum[result.rows[0].datum.length-2]);
 
-    return (Number(dividend.rows[0].datum[dividend.rows[0].datum.length-2]))
+    console.log(dividend)
+
+    return dividend
+
+    //return (Number(dividend.rows[0].datum[dividend.rows[0].datum.length-2]));
     
 }
 
@@ -58,11 +62,11 @@ export async function getYield(performanceId:any) {
         fetch(url2, options)
             .then(res => res.json())
             .catch(err => console.error('error:' + err))
-    ])
+    ]);
 
     //console.log(result[0].rows[0].datum[result[0].rows[0].datum.length-2])
     //console.log(result[1].lastPrice)
 
-    return Number((Number(result[0].rows[0].datum[result[0].rows[0].datum.length-2]) / result[1].lastPrice * 100).toFixed(2))
+    return Number((Number(result[0].rows[0].datum[result[0].rows[0].datum.length-2]) / result[1].lastPrice * 100).toFixed(2));
     
 }
